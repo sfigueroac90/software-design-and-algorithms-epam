@@ -7,7 +7,7 @@ export class Point {
   constructor(x?: number, y?: number) {
     //this.toString = this.toString.bind(this);
 
-    if (x !== undefined && y !== undefined) {
+    if (x && y) {
       this.x = x;
       this.y = y;
       return this;
@@ -31,12 +31,12 @@ export class Point {
 
     if (args[0] instanceof Point) {
       const point = args[0] as Point;
-      return this.distanceCalc(this.x - point.x, this.y - point.y);
+      return this.distanceCalc(point.x, point.y);
     }
 
     if (typeof args[0] === "number" && typeof args[1] === "number") {
       const [x, y] = args as number[];
-      return this.distanceCalc(this.x - x, this.y - y);
+      return this.distanceCalc(x, y);
     }
   }
 
@@ -44,6 +44,6 @@ export class Point {
     return "Point";
   }
   public toString(): string {
-    return `(${this.x}, ${this.y})`;
+    return `(${this.x},${this.y})`;
   }
 }

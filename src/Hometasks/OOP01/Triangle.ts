@@ -18,22 +18,8 @@ export class Triangle extends Shape {
   }
 
   toString(): string {
-    return `Triangle[${this.points
-      .map((p, i) => `v${i + 1}=${p.toString()}`)
+    return `Triangle ${this.points
+      .map((p, i) => `v${i}=${p.toString()}`)
       .join(",")}]`;
-  }
-
-  getType(): string {
-    const [l1, l2, l3] = this.getBorders().map((b) => b.toFixed(2));
-
-    if (l1 === l2 && l2 === l3) {
-      return "equilateral triangle";
-    }
-
-    if (l1 === l2 || l1 === l3 || l2 == l3) {
-      return "isosceles triangle";
-    }
-
-    return "scalene triangle";
   }
 }
