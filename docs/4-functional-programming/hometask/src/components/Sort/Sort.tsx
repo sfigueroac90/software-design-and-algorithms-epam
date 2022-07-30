@@ -5,10 +5,11 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import styles from './Sort.module.scss'
-import { Store } from "@mui/icons-material";
+import { Store } from "../../store";
+
 
 interface SortProps {
-  store?: {};
+  store?: Store;
   updateStore?: (val) => void;
 }
 

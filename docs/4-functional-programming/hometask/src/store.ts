@@ -39,10 +39,22 @@ export const search = (store: Store) => {
             .map((v) => "" + v)
             .reduce(
               (p, c) =>
-                c.toLowerCase().includes(store.searchValue.toLowerCase()) || p,
+                c.toLowerCase().includes(store.searchValue?.toLowerCase()) || p,
               false
             )
         )
-      : store.data,
+      : [],
+  };
+};
+
+export const modifiedStore = (store: Store) => {
+  return {
+    ...store,
+    data: sort({
+      ...store,
+      data: [...filter(store).data, ...search(store).data].filter(
+        (v, i, arr) => i === arr.indexOf(v)
+      ),
+    }).data,
   };
 };

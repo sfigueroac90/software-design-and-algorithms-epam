@@ -11,7 +11,7 @@ import type { Image, User, Account } from '../types';
 
 import rows from './mocks/rows.json';
 import { dataConverter } from "./Utils/dataConverter";
-import { filter, search, sort, Store } from "./store";
+import { filter, modifiedStore, search, sort, Store } from "./store";
 import { compose } from "./Utils/compose";
 
 // mockedData has to be replaced with parsed Promises’ data
@@ -50,7 +50,7 @@ function App() {
           </div>
           <Search store={store} updateStore={updateStore} />
         </div>
-        <Table rows={compose(filter, search, sort)(store).data || mockedData} />
+        <Table rows={modifiedStore(store).data} />
       </div>
     </StyledEngineProvider>
   );
