@@ -18,9 +18,8 @@ export const filter = (filters: string[], data: Row[]) => {
     "Without posts": (row: Row) => row.posts === 0,
     "More than 100 posts": (row: Row) => row.posts >= 100,
   };
-  return filters && filters.length > 0
-    ? filters.reduce((p, c) => [...p, ...data.filter(filterMap[c])], [])
-    : data;
+  return filters.reduce((p, c) => [...p, ...data.filter(filterMap[c])], []);
+   
 };
 
 export const search = (sarchTerm?, data?: Row[]) => {
@@ -42,14 +41,14 @@ const removeDuplicateds = (data: Row[]) =>
   );
 
 export const modifiedStore = (store: Store) => {
+
+    const filtered = removeDuplicateds([
+      ...filter(store.filters, store.data),
+      ...search(store.searchValue, store.data),
+    ]);
+
   return {
     ...store,
-    data: sort(
-      store.sortType,
-      removeDuplicateds([
-        ...filter(store.filters, store.data),
-        ...search(store.searchValue, store.data),
-      ])
-    ),
+    data: sort(store.sortType, filtered.length > 0 ? filtered : store.data),
   };
 };
