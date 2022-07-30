@@ -7,54 +7,41 @@ export interface Store {
   data?: Row[];
 }
 
-export const sort = (store: Store) => {
+export const sort = (sortType: string, data: Row[]) => {
   const sortAsc = (a, b) => a.lastPayments - b.lastPayments;
   const sortDes = (a, b) => b.lastPayments - a.lastPayments;
-  const sortedData = store.sortType
-    ? [...store.data].sort(store.sortType === "asc" ? sortAsc : sortDes)
-    : store.data;
-  return { ...store, data: sortedData };
+  return sortType ? data.sort(sortType === "asc" ? sortAsc : sortDes) : data;
 };
 
-export const filter = (store: Store) => {
+export const filter = (filters: string[], data: Row[]) => {
   const filterMap = {
     "Without posts": (row: Row) => row.posts === 0,
     "More than 100 posts": (row: Row) => row.posts >= 100,
   };
-  return {
-    ...store,
-    data:
-      store.filters && store.filters.length > 0
-        ? store.filters.reduce((p, c) => p.filter(filterMap[c]), store.data)
-        : store.data,
-  };
+  return filters && filters.length > 0
+    ? filters.reduce((p, c) => p.filter(filterMap[c]), data)
+    : data;
 };
 
-export const search = (store: Store) => {
-  return {
-    ...store,
-    data: store.searchValue
-      ? store.data.filter((v) =>
-          [v.country, v.lastPayments, v.name, v.posts, v.username]
-            .map((v) => "" + v)
-            .reduce(
-              (p, c) =>
-                c.toLowerCase().includes(store.searchValue?.toLowerCase()) || p,
-              false
-            )
-        )
-      : [],
-  };
+export const search = (sarchTerm?, data?: Row[]) => {
+  return sarchTerm
+    ? data.filter((v) =>
+        [v.country, v.lastPayments, v.name, v.posts, v.username]
+          .map((v) => "" + v)
+          .reduce(
+            (p, c) => c.toLowerCase().includes(sarchTerm?.toLowerCase()) || p,
+            false
+          )
+      )
+    : ([] as Row[]);
 };
 
 export const modifiedStore = (store: Store) => {
   return {
     ...store,
-    data: sort({
-      ...store,
-      data: [...filter(store).data, ...search(store).data].filter(
-        (v, i, arr) => i === arr.indexOf(v)
-      ),
-    }).data,
+    data: sort(store.sortType, [
+      ...filter(store.filters, store.data),
+      ...search(store.searchValue, store.data),
+    ]),
   };
 };
