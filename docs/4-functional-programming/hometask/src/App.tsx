@@ -18,7 +18,7 @@ import { compose } from "./Utils/compose";
 const mockedData: Row[] = rows.data;
 
 function App() {
-  const [store, setStore] = useState<Store>({ filters: [] });
+  const [store, setStore] = useState<Store>({ filters: [], data: [] });
 
   const updateStore = (store: Store) => {
     setStore(store);

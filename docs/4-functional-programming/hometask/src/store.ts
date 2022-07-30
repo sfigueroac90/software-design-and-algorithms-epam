@@ -8,8 +8,8 @@ export interface Store {
 }
 
 export const sort = (store: Store) => {
-  const sortDes = (a, b) => a.lastPayments - b.lastPayments;
-  const sortAsc = (a, b) => b.lastPayments - a.lastPayments;
+  const sortAsc = (a, b) => a.lastPayments - b.lastPayments;
+  const sortDes = (a, b) => b.lastPayments - a.lastPayments;
   const sortedData = store.sortType
     ? [...store.data].sort(store.sortType === "asc" ? sortAsc : sortDes)
     : store.data;
@@ -35,7 +35,13 @@ export const search = (store: Store) => {
     ...store,
     data: store.searchValue
       ? store.data.filter((v) =>
-          v.name.toLowerCase().includes(store.searchValue.toLowerCase())
+          [v.country, v.lastPayments, v.name, v.posts]
+            .map((v) => "" + v)
+            .reduce(
+              (p, c) =>
+                c.toLowerCase().includes(store.searchValue.toLowerCase()) || p,
+              false
+            )
         )
       : store.data,
   };
