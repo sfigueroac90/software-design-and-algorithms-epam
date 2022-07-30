@@ -35,7 +35,7 @@ export const search = (store: Store) => {
     ...store,
     data: store.searchValue
       ? store.data.filter((v) =>
-          [v.country, v.lastPayments, v.name, v.posts]
+          [v.country, v.lastPayments, v.name, v.posts, v.username]
             .map((v) => "" + v)
             .reduce(
               (p, c) =>
