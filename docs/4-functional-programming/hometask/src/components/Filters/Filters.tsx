@@ -2,9 +2,10 @@ import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 
 import styles from './Filters.module.scss';
+import { Store } from "../../store";
 
 interface FiltersProps {
-  store?: {};
+  store?: Store;
   updateStore?: (val) => void;
 }
 
@@ -19,29 +20,25 @@ interface FiltersProps {
 
 const OPTIONS = [
   {
-    title: 'Without posts',
+    title: "Without posts",
   },
   {
-    title: 'More than 100 posts',
+    title: "More than 100 posts",
   },
 ];
 
-export function Filters(props: FiltersProps) {
-  const [selectedFilter, setSelectedFilter] = useState<string[]>([]);
-
+export function Filters({ store, updateStore }: FiltersProps) {
   const onChange = ({ title }) => {
     console.log(title); // for debugging
 
     let updatedFilters;
-    if (selectedFilter.find((filter) => filter === title)) {
-      updatedFilters = selectedFilter.filter(
-        (filter) => filter !== title
-      );
+    if (store.filters.find((filter) => filter === title)) {
+      updatedFilters = store.filters.filter((filter) => filter !== title);
     } else {
-      updatedFilters = [...selectedFilter, title];
+      updatedFilters = [...store.filters, title];
     }
 
-    setSelectedFilter(updatedFilters);
+    updateStore({ ...store, filters: updatedFilters });
   };
 
   return (
@@ -55,12 +52,14 @@ export function Filters(props: FiltersProps) {
             key={option.title}
           >
             <Checkbox
-              checked={!!selectedFilter.find(filter => filter === option.title)}
+              checked={
+                !!store.filters.find((filter) => filter === option.title)
+              }
               value={option.title}
               onChange={() => onChange(option)}
               size="small"
               color="primary"
-            />{' '}
+            />{" "}
             {option.title}
           </li>
         ))}

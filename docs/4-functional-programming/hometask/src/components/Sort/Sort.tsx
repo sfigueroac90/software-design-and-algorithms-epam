@@ -5,6 +5,7 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 
 import styles from './Sort.module.scss'
+import { Store } from "@mui/icons-material";
 
 interface SortProps {
   store?: {};
@@ -20,16 +21,14 @@ interface SortProps {
 
 // OR store can be global
 
-export function Sort(props: SortProps) {
+export function Sort({ store, updateStore }: SortProps) {
   const handleChange = (value) => {
-    console.log(value); // for debugging
+    updateStore({ ...store, sortType: value });
   };
 
   return (
     <FormControl className={styles.control} component="fieldset">
-      <FormLabel className={styles.label}>
-        Sort by payments
-      </FormLabel>
+      <FormLabel className={styles.label}>Sort by payments</FormLabel>
       <RadioGroup
         className={styles.group}
         aria-label="sorting"

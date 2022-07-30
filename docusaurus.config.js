@@ -22,6 +22,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve("./sidebars.js"),
           editUrl: undefined,
+          exclude: ["**/node_modules/**"],
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
@@ -83,7 +84,7 @@ const config = {
                 label: "Gitlab",
               },
             ],
-          }
+          },
         ],
       },
       prism: {
