@@ -1,18 +1,17 @@
-import { useState, useEffect } from 'react';
-import { StyledEngineProvider } from '@mui/material/styles';
+import { StyledEngineProvider } from "@mui/material/styles";
+import { useEffect, useState } from "react";
 
-import { Table, Filters, Sort, Search } from './components';
-import { getImages, getUsers, getAccounts } from './mocks/api';
+import { Filters, Search, Sort, Table } from "./components";
+import { getAccounts, getImages, getUsers } from "./mocks/api";
 
-import styles from './App.module.scss';
+import styles from "./App.module.scss";
 
-import type { Row } from './components';
-import type { Image, User, Account } from '../types';
+import type { Account, Image, User } from "../types";
+import type { Row } from "./components";
 
-import rows from './mocks/rows.json';
+import rows from "./mocks/rows.json";
+import { modifiedStore, Store } from "./store";
 import { dataConverter } from "./Utils/dataConverter";
-import { filter, modifiedStore, search, sort, Store } from "./store";
-import { compose } from "./Utils/compose";
 
 // mockedData has to be replaced with parsed Promises’ data
 const mockedData: Row[] = rows.data;
