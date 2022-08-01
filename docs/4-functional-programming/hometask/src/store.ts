@@ -97,10 +97,10 @@ export const search = (sarchTerm?, data?: Row[]) => {
  * @param data
  * @returns
  */
-const removeDuplicateds = <T extends { username: string }>(data: T[]) =>
-  data.filter(
-    (v, i, arr) => arr.map((v) => v.username).indexOf(v.username) === i
-  );
+const removeDuplicateds = <T extends { username: string }>(data: T[]) => {
+  const userNames = data.map((v) => v.username);
+  return data.filter((v, i) => userNames.indexOf(v.username) === i);
+};
 
 /**
  * Function to get filtered store data according to business rules
