@@ -55,7 +55,7 @@ export const compare = (rowA: Row, rowB: Row, key?: keyof Row) => {
 
 /**
  * Genereted filtered data, filters works as "OR" condition.
- * @param filters Array of string with the name of the filters, "Without posts" || "More than 100 posts"
+ * @param filters Array of string with the name of the filters, "Without posts" || "More than 100 posts", if string is not in the filter map will return all the array
  * @param data Rows
  * @param filterMapMixing Object to extend the filter function with more filter strings and filter functions
  * @returns
@@ -70,7 +70,10 @@ export const filter = (
     "More than 100 posts": (row: Row) => row.posts >= 100,
     ...filterMapMixing,
   };
-  return filters.reduce((p, c) => [...p, ...data.filter(filterMap[c])], []);
+  return filters.reduce(
+    (p, c) => [...p, ...data.filter(filterMap[c] || ((row) => true))],
+    []
+  );
 };
 
 /**
