@@ -7,6 +7,13 @@ const getById = <T extends { userID: string }>(arr: T[], id: string): T =>
 
 const last = <T>(arr: T[]): T => arr[arr.length - 1];
 
+/**
+ * Generates row from users, accounts, and images, uses user ID to Join data.
+ * @param users 
+ * @param accounts 
+ * @param images 
+ * @returns Joined rows
+ */
 export const dataConverter = (
   users: User[],
   accounts: Account[],
