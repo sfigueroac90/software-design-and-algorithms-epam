@@ -1,4 +1,3 @@
-import { User } from "../types";
 import { Row } from "./components";
 
 /**
@@ -56,14 +55,20 @@ export const compare = (rowA: Row, rowB: Row, key?: keyof Row) => {
 
 /**
  * Genereted filtered data, filters works as "OR" condition.
- * @param filters Array of the name of the filters, "Without posts" || "More than 100 posts"
- * @param data
+ * @param filters Array of string with the name of the filters, "Without posts" || "More than 100 posts"
+ * @param data Rows
+ * @param filterMapMixing Object to extend the filter function with more filter strings and filter functions
  * @returns
  */
-export const filter = (filters: string[], data: Row[]) => {
+export const filter = (
+  filters: string[],
+  data: Row[],
+  filterMapMixing?: Record<string, (row: Row) => boolean>
+) => {
   const filterMap = {
     "Without posts": (row: Row) => row.posts === 0,
     "More than 100 posts": (row: Row) => row.posts >= 100,
+    ...filterMapMixing,
   };
   return filters.reduce((p, c) => [...p, ...data.filter(filterMap[c])], []);
 };
@@ -104,17 +109,17 @@ const removeDuplicateds = <T extends { username: string }>(data: T[]) =>
  */
 
 export const filteredStore = (store: Store) => {
-  const filtered = removeDuplicateds([
-    ...(store.filters.length ? filter(store.filters, store.data) : []),
-    ...search(store.searchValue, store.data),
+  const filtered = filter(store.filters, store.data);
+  const searched = search(store.searchValue, store.data);
+
+  const filteredAndSearched = removeDuplicateds([
+    ...filtered,
+    ...searched,
+    ...(!store.filters.length && !store.searchValue ? store.data : []),
   ]);
 
   return {
     ...store,
-    data: sort(
-      store.sortType,
-      filtered.length > 0 ? filtered : store.data,
-      "lastPayments"
-    ),
+    data: sort(store.sortType, filteredAndSearched, "lastPayments"),
   };
 };

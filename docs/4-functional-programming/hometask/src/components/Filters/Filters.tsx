@@ -23,6 +23,9 @@ const OPTIONS = [
     title: "Without posts",
   },
   {
+    title: "With more than 10",
+  },
+  {
     title: "More than 100 posts",
   },
 ];
