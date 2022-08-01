@@ -6,7 +6,7 @@ import { Store } from "../../store";
 
 interface FiltersProps {
   store?: Store;
-  updateStore?: (val) => void;
+  updateStore?: (val: Store) => void;
 }
 
 // OR

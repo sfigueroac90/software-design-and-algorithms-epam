@@ -7,6 +7,13 @@ export interface Store {
   data?: Row[];
 }
 
+export const storeInit: Store = {
+  filters: [],
+  data: [],
+  sortType: "asc",
+  searchValue: "",
+};
+
 export const sort = (sortType: string, data: Row[]) => {
   const sortAsc = (a, b) => a.lastPayments - b.lastPayments;
   const sortDes = (a, b) => b.lastPayments - a.lastPayments;
@@ -19,7 +26,6 @@ export const filter = (filters: string[], data: Row[]) => {
     "More than 100 posts": (row: Row) => row.posts >= 100,
   };
   return filters.reduce((p, c) => [...p, ...data.filter(filterMap[c])], []);
-   
 };
 
 export const search = (sarchTerm?, data?: Row[]) => {
@@ -40,12 +46,11 @@ const removeDuplicateds = (data: Row[]) =>
     (v, i, arr) => arr.map((v) => v.username).indexOf(v.username) === i
   );
 
-export const modifiedStore = (store: Store) => {
-
-    const filtered = removeDuplicateds([
-      ...filter(store.filters, store.data),
-      ...search(store.searchValue, store.data),
-    ]);
+export const filteredStore = (store: Store) => {
+  const filtered = removeDuplicateds([
+    ...(store.filters.length ? filter(store.filters, store.data) : []),
+    ...search(store.searchValue, store.data),
+  ]);
 
   return {
     ...store,

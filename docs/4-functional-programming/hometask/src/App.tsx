@@ -7,17 +7,12 @@ import { getAccounts, getImages, getUsers } from "./mocks/api";
 import styles from "./App.module.scss";
 
 import type { Account, Image, User } from "../types";
-import type { Row } from "./components";
 
-import rows from "./mocks/rows.json";
-import { modifiedStore, Store } from "./store";
+import { filteredStore, Store, storeInit } from "./store";
 import { dataConverter } from "./Utils/dataConverter";
 
-// mockedData has to be replaced with parsed Promises’ data
-const mockedData: Row[] = rows.data;
-
 function App() {
-  const [store, setStore] = useState<Store>({ filters: [], data: [] });
+  const [store, setStore] = useState<Store>(storeInit);
 
   const updateStore = (store: Store) => {
     setStore(store);
@@ -49,7 +44,7 @@ function App() {
           </div>
           <Search store={store} updateStore={updateStore} />
         </div>
-        <Table rows={modifiedStore(store).data} />
+        <Table rows={filteredStore(store).data} />
       </div>
     </StyledEngineProvider>
   );
