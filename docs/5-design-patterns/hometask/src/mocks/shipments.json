@@ -1,0 +1,27 @@
+{
+    "data":    [ {
+            "shipmentID":0,
+            "weight": 10,
+            "fromAddress": "Calle 48 #40-12, Medellin, Antioquia ",
+            "fromZipCode": "3040303",
+            "toAddress": "Calle 34 #10-12, Cali, Valle del Cauca",
+            "toZipCode": "00303030"
+        },
+        {
+            "shipmentID":0,
+            "weight": 34.4,
+            "fromAddress": "Calle 1 #40-12, Medellin, Antioquia ",
+            "fromZipCode": "3040303",
+            "toAddress": "Calle 3 #11-12, Cali, Valle del Cauca",
+            "toZipCode": "00303030"
+        },
+        {
+            "shipmentID":0,
+            "weight": 34.4,
+            "fromAddress": "Calle 1 #40-12, Medellin, Antioquia ",
+            "fromZipCode": "3040303",
+            "toAddress": "Calle 3 #11-12, Cali, Valle del Cauca",
+            "toZipCode": "00303030"
+        }
+]
+}
