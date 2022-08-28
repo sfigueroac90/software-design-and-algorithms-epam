@@ -1,4 +1,3 @@
-import { Shipment } from "./Shipment"
 import { getShipments } from "./mocks/api";
 import { Client } from "./Client";
 

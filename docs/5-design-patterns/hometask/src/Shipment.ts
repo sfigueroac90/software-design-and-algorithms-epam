@@ -1,3 +1,4 @@
+import { Shipper } from './Shipper';
 /**
  * @interface IShipment
  * @member {number}  ShipmentID - that represents an existing ID, or 0, which means you have to generate a new, unique ID at construction time
@@ -16,12 +17,10 @@ export interface IShipmentState {
     toZipCode:string
 }
 
-
-
 export class Shipment implements IShipmentState{
     
-    private static count: number = 0;
-    private rate = 0.39;
+    private static count = 0;
+    private shipper: Shipper;
     shipmentID: number 
     weight: number
     fromAddress: string
@@ -29,8 +28,9 @@ export class Shipment implements IShipmentState{
     toAddress:string
     toZipCode:string
 
-    constructor(shipmentState:IShipmentState){    
+    constructor(shipmentState:IShipmentState,shipper?:Shipper){    
         Object.assign(this,{...shipmentState})
+        this.shipper = shipper;
     }
    
     getShipmentID(){
@@ -44,12 +44,12 @@ export class Shipment implements IShipmentState{
     }
 
     getCost(){
-        return this.rate * this.weight;
+        return this.shipper.getCost(this.weight);
     }
 
     ship(){
-        return `Shipment: ${this.getShipmentID()} from: ${this.fromAddress}(${this.fromZipCode}) has been shipped to: ${this.toAddress
-        }(${this.toZipCode}) with a cost of ${this.getCost().toFixed(2)}`
+        return `Shipment: ${this.getShipmentID()} with weight ${this.weight} from: ${this.fromAddress}(${this.fromZipCode}) has been shipped to: ${this.toAddress
+        }(${this.toZipCode}) with a cost of ${this.getCost().toFixed(2)}, sent by ${this.shipper.getName()}`
     }
     
 }

@@ -1,3 +1,4 @@
+import { defaultShipmentFactory } from './ShipmentFactory';
 import { IShipmentState, Shipment } from './Shipment';
 import { getShipments } from "./mocks/api";
 
@@ -9,7 +10,7 @@ export class Client{
 
     shipAll(){
         this.shipments.forEach((shipmentState)=>{
-            const shipment = new Shipment(shipmentState);
+            const shipment =  defaultShipmentFactory.createShipment(shipmentState);
             console.log(shipment.ship())
         })
         
