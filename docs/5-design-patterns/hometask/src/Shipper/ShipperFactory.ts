@@ -1,10 +1,12 @@
+
+import { AirEastShipper } from './ConcreteShippers/AirEastShipper';
+import { ChicagoSprintShipper } from './ConcreteShippers/ChicagoSprintShipper';
+import { PacificParcelShipper } from './ConcreteShippers/PacificParcelShipper';
 import { Shipper } from './Shipper';
-import { AirEastShipper, ChicagoSprintShipper, PacificParcelShipper, ShipperConfig } from './Shipper';
+import { ShipperConfig } from './Shipper';
 export interface ShipperFactory {
     createShipper(config:ShipperConfig):Shipper
 }
-
-
 
 const factoryMap= {
     "AirEastShipper": AirEastShipper,

@@ -1,4 +1,4 @@
-import { ShipperConfig } from "Shipper";
+import { ShipperConfig } from "Shipper/Shipper";
 
 export const shipperCompanies = [
     {name:"AirEastShipper",fromZipCodeStart:[1,2,3], isDefault: true},

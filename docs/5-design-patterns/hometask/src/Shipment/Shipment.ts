@@ -1,6 +1,6 @@
-import { Shipper } from './Shipper';
+import { Shipper } from '../Shipper/Shipper';
 /**
- * @interface IShipment
+ * @interface IShipmentState
  * @member {number}  ShipmentID - that represents an existing ID, or 0, which means you have to generate a new, unique ID at construction time
  * @member {string} weight - a number, storing the weight of the item in ounces
  * @member {string} fromAddress - a string containing street, city, and state, should be changeable
@@ -8,15 +8,20 @@ import { Shipper } from './Shipper';
  * @member {string} toAdddress  - a string containing street, city, and state, should be changeable
  * @member {string} toZipCode - a string containing exactly 5 characters, should be changeable
 */
+
 export interface IShipmentState {
     shipmentID: number, 
     weight: number,
     fromAddress: string,
     fromZipCode: string,
     toAddress:string,
-    toZipCode:string
+    toZipCode:string,
+    marks?: string[]
 }
 
+/**
+ * Base  class for Shipment implements IShipmentState as well as IShipment
+ */
 export class Shipment implements IShipmentState{
     
     private static count = 0;

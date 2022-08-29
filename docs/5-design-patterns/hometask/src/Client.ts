@@ -1,7 +1,9 @@
-import { defaultShipmentFactory } from './ShipmentFactory';
-import { IShipmentState, Shipment } from './Shipment';
-import { getShipments } from "./mocks/api";
+import { IShipmentState } from './Shipment/Shipment';
+import { defaultShipmentFactory } from './Shipment/ShipmentFactory';
 
+/**
+ * Client code only is initialized with sihpments hand generates al shipments objects when shipAll is called
+ */
 export class Client{
     private shipments:IShipmentState[];
     constructor(shipments:IShipmentState[]){

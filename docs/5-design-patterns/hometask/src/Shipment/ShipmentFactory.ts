@@ -1,7 +1,7 @@
-import { Shipment } from './Shipment';
-import { shipperCompanies } from './shipperCompanies';
-import { IShipmentState } from "Shipment"
-import { defaultShipperFactory } from './ShipperFactory';
+import { defaultShipperFactory } from '../Shipper/ShipperFactory';
+import { shipperCompanies } from '../shipperCompanies';
+import { IShipmentState, Shipment } from './Shipment';
+import { decoratorsMap } from './ShipmentDecorator';
 
 interface ShipmentFactory{
     createShipment(shipment?:IShipmentState)
@@ -18,7 +18,14 @@ class ConcreteShipmentFactory implements ShipmentFactory{
 
     createShipment(shipment?:IShipmentState){
         const shipper = this.createShipper(shipment);
-        return new Shipment(shipment,shipper);
+
+        //Compose decorators
+        return  (shipment.marks ||[]).reduce((p,c) => { 
+            const decorator=decoratorsMap[c]
+            return decorator ? decorator(p):p
+        }
+            ,new Shipment(shipment,shipper)); 
+       
     }
 
 
