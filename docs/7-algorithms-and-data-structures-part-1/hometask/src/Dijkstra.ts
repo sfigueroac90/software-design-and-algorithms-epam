@@ -50,7 +50,7 @@ function DijkstrAlgorithm(G:WeightedGraphObject, w, s:Vertex) {
     }
 }
 
-function getPath(vertex1: Vertex, vertex2: Vertex):Path{
+function getPath( vertex2: Vertex):Path{
     if(vertex2.d == Number.MAX_SAFE_INTEGER){
         return { path: [], distance: Number.POSITIVE_INFINITY}
     }
@@ -73,13 +73,13 @@ export class DijksTraBase implements Dijkstra<Vertex>{
 
     findShortestPath(vertex1: Vertex, vertex2: Vertex) { 
         DijkstrAlgorithm(this.graph as WeightedGraphObject,w,vertex1);  
-        return getPath(vertex1,vertex2)
+        return getPath(vertex2)
     }
     findAllShortestPaths(vertex: Vertex): Record<string, Path> {
         DijkstrAlgorithm(this.graph as WeightedGraphObject,w,vertex);  
         const paths = sortQ((this.graph as WeightedGraphObject).vertices).filter(v => v.key !== vertex.key)
         return paths.reduce((p,v)=>{
-            p[v.key] = getPath(vertex,v)
+            p[v.key] = getPath(v)
             return p;
         },{})
     }
