@@ -19,7 +19,9 @@ function w(u:Vertex,v:Vertex){
     }
     return v.edges.find(e => e.from.key === u.key || e.to.key === u.key ).weight;
 }
-
+/**
+ * Init weighted graph vertices to have maximum distance.
+ */
 function initSingleSource(G:WeightedGraphObject, s:Vertex) {
     for (const v of G.vertices) {
       v.d = Number.MAX_SAFE_INTEGER;
@@ -28,6 +30,9 @@ function initSingleSource(G:WeightedGraphObject, s:Vertex) {
         s.d = 0;
   } 
   
+  /**
+ * Check if new distance is shorter than previous one
+ */
   function relax(u:Vertex, v:Vertex, w) {
     if (v.d > u.d + w(u, v)) {
       v.d = u.d + w(u, v);
@@ -35,6 +40,11 @@ function initSingleSource(G:WeightedGraphObject, s:Vertex) {
     }
   }
 
+
+/**
+ * DijkstrAlgorithm
+ * Run dijstkra algorithm and set distances in Weigthed graph object, inplace.
+ */
 function DijkstrAlgorithm(G:WeightedGraphObject, w, s:Vertex) {
     initSingleSource(G, s);
     const S: Vertex[]=[];
@@ -50,6 +60,9 @@ function DijkstrAlgorithm(G:WeightedGraphObject, w, s:Vertex) {
     }
 }
 
+/**
+ * Generate Path object with path array and distance
+ */
 function getPath( vertex2: Vertex):Path{
     if(vertex2.d == Number.MAX_SAFE_INTEGER){
         return { path: [], distance: Number.POSITIVE_INFINITY}
@@ -57,11 +70,13 @@ function getPath( vertex2: Vertex):Path{
 
     const path: string[] = [];
     let currentVert = vertex2;
+    path.push(vertex2.key)
     while(currentVert.p && currentVert.d !== Number.MAX_SAFE_INTEGER){
         path.push(currentVert.p.key);
         currentVert = currentVert.p
     }
-    path.push(vertex2.key)
+   
+    path.reverse()
     return {path,distance: vertex2.d}
 }
 

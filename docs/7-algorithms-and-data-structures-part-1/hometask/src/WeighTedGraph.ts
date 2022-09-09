@@ -41,10 +41,16 @@ export class WeightedGraphObject implements WeightedGraph<Vertex>,Info {
   public vertices: Vertex[]=[]
   public edges: Edge[]=[];
 
+  /**
+   * Only adds vertex to arrray
+   */
   addVertex(vertex:Vertex){
     this.vertices.push(vertex);
   }
 
+  /**
+   * Add edges and set vertex edges
+   */
   addEdge(vertex1: Vertex, vertex2: Vertex, weight: number){
     const newEdge =  new Edge(vertex1,vertex2,weight);
     this.vertices.find(v => v.key === vertex1.key).edges.push(newEdge)
@@ -52,8 +58,15 @@ export class WeightedGraphObject implements WeightedGraph<Vertex>,Info {
     this.edges.push(newEdge);
   }
 
+  /**
+   * Generates the adjancey list (neighbors) for Vertex parameter
+   */
   adj(vertex: Vertex) {
-    return this.vertices.filter(v => v.key !== vertex.key && v.edges.filter(e => e.from.key === vertex.key || e.to.key === vertex.key).length>0)
+    return this.vertices.filter(
+      v => v.key !== vertex.key && 
+      v.edges.filter(
+        e => e.from.key === vertex.key || 
+        e.to.key === vertex.key).length>0)
   }
 
   info(){
