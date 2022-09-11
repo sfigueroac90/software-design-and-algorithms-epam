@@ -1,6 +1,6 @@
 export interface Job  {
     key: number,
-    job: ()=> void;
+    job: ()=> void | any;
 }
 
 export interface PrioriyQueue {
@@ -8,5 +8,6 @@ export interface PrioriyQueue {
     insert:(job:Job)=> void
     maximum:() => Job
     extractMax:()=> Job
+    remove:(job:Job)=>void
     increaseKey(x:Job,key:number):void
 }

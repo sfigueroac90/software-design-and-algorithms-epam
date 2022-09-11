@@ -21,6 +21,11 @@ export class CircularPriorityQueue  implements PrioriyQueue{
        return this.initialJobsHeap.maximum() || this.secondJobsHeap.maximum();
     }
 
+    remove(job:Job){
+        this.initialJobsHeap.remove(job)
+        this.secondJobsHeap.remove(job);
+    }
+
     extractMax(){
         const job = this.initialJobsHeap.extractMax();
         if(job !== undefined){

@@ -1,3 +1,4 @@
+import { inflate } from "zlib";
 import { Job, PrioriyQueue } from "../interface/PriorityQueue";
 import { heapify, heapifyBottomUp, swap } from "../Utils/HeapUtils";
 
@@ -14,6 +15,20 @@ export class PriorityQueueBasic implements PrioriyQueue {
             this.jobsHeap.push(job);
             heapifyBottomUp(this.jobsHeap,this.heapSize-1,this.heapSize)        
         }  
+    }
+
+    remove(job:Job){
+        const index = this.jobsHeap.indexOf(job);
+        const last = this.heapSize-1;
+        if(index !== -1) {
+            //swap with last
+            swap(index,last,this.jobsHeap)
+            swap(0,last,this.jobsHeap)
+            this.jobsHeap.pop();
+            this.heapSize--;
+            heapify(this.jobsHeap,0,this.heapSize)
+
+        }
     }
 
     insertAll(jobs:Job[]){
