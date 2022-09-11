@@ -4,6 +4,7 @@ export interface Job  {
 }
 
 export interface PrioriyQueue {
+    insertAll:(jobs:Job[]) => void;
     insert:(job:Job)=> void
     maximum:() => Job
     extractMax:()=> Job
